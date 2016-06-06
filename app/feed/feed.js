@@ -120,7 +120,7 @@ angular.module('myApp.feed', ['ngRoute'])
         //prevents from liking more than once
         $('.likeButton').click(function(){
         console.log("clicked")
-        $(this).css({"opacity":"0"})
+        $(this).css({"opacity":"0", "display":"none"})
         })
         
         var syn = $firebase(fb);
