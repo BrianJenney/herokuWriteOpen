@@ -20,7 +20,7 @@
 
       .container.readPost {
       position: fixed;
-      margin-top: -65%;
+      margin-top: -40%;
       border-radius: 2%;
       z-index: -9999;
       }
@@ -97,7 +97,7 @@
     <button ng-click="closeReadComment()" class="close" style="color: blue; font-family: sans-serif; margin-right: 2%;">x</button>
     <div style="width: 100%; border: 1px solid lightgray ">
 
-      <li ng-show="!comments.length">No Comments Yet...</li>
+      <li style="list-style: none" ng-show="!comments.length">No Comments Yet...</li>
       <div ng-repeat="comment in comments">
 
         <li style="list-style: none"> - {{comment.commenter}}</li>
