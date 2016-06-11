@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
     <title>writeOpen</title>
 
@@ -20,7 +20,7 @@
 
       .container.readPost {
       position: fixed;
-      margin-top: -40%;
+      margin-top: -45%;
       border-radius: 2%;
       z-index: -9999;
       }
@@ -56,14 +56,15 @@
           
         </div>
         <div class="col-md-6">
-          <button class="likeButton" ng-disabled="isDisabled[key]" class="likes" ng-click="plusOne(article.$id)">+</button>
+          <button class="btn btn-success likeButton" ng-disabled="isDisabled[key]" class="likes" ng-click="plusOne(article.$id)">+</button>
           <!-- Leave comment function -->
-          <button id="commentButton" ng-click="openComment(article.$id)">Leave a Comment</button>
+          <button class="btn btn-primary" id="commentButton" ng-click="openComment(article.$id)">Leave a Comment</button>
 
           <!-- Read Comments function -->
-          <button ng-click="readComment(article.$id)">Comments</button>
+          <button class="btn btn-primary"ng-click="readComment(article.$id)">Comments</button>
           <br></br>
           <h3>Likes: {{ article.likes }}</h3>
+
         </div>
         
       </div>
@@ -87,14 +88,13 @@
     <input  style="margin-bottom: 1%; border: 1px solid gray;"placeholder="Your Name"ng-model="postToComment.commenter" />
     <textarea ng-model="postToComment.comment"style="height: 100px; width: 100%; ">
     </textarea>
-    <button style="background-color: ghostwhite;
-    border: 1px solid gray;margin-top: 1%;"ng-disabled="!postToComment.comment|| !postToComment.commenter" ng-click="writeComment()">Comment</button>
+    <button class="btn btn-success" ng-disabled="!postToComment.comment|| !postToComment.commenter" ng-click="writeComment()">Comment</button>
   </div>
 
   <!--Modal for reading comments  -->
   <div style="height: auto; opacity: 0;  position: fixed; z-index: -1; margin-top: -40%; background-color: white; border: 1px solid lightgray; padding: 15px" class="container readComment">
   
-    <button ng-click="closeReadComment()" class="close" style="color: blue; font-family: sans-serif; margin-right: 2%;">x</button>
+    <button ng-click="closeReadComment()" class="close" style=" font-family: sans-serif; margin-right: 2%;">x</button>
     <div style="width: 100%; border: 1px solid lightgray ">
 
       <li style="list-style: none" ng-show="!comments.length">No Comments Yet...</li>
