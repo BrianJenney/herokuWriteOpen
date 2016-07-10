@@ -9,14 +9,14 @@ angular.module('myApp.feed', ['ngRoute'])
   });
 }])
 
-.controller('FeedCtrl', ['$scope', '$firebase','$location','CommonProp', function($scope, $firebase, $location, CommonProp) {
+.controller('FeedCtrl', ['$scope','$firebase','$location','CommonProp', function($scope,$firebase, $location, CommonProp) {
+
 
     var firebaseObj = new Firebase("https://writesource.firebaseio.com/Articles/");
 
 
     var sync = $firebase(firebaseObj)
     $scope.articles = sync.$asArray();
-    console.log(sync);
 
     $scope.logout = function(){
     CommonProp.logoutUser();
@@ -29,13 +29,6 @@ angular.module('myApp.feed', ['ngRoute'])
 
         var sync = $firebase(firebaseObj)
         $scope.postToComment = sync.$asObject();
-        console.log($scope.postToComment);
-
-        $('.writeComment').css({"opacity":"1","z-index":"999"})
-
-        $('.posts').css({"opacity":"0"})
-
-        console.log("Done")
     }
 
     //push comments to firebase
@@ -44,7 +37,7 @@ angular.module('myApp.feed', ['ngRoute'])
         console.log(fb)
 
         var comment = $scope.postToComment.comment;
-        console.log(comment)
+
         var commenter = $scope.postToComment.commenter;
 
         var article = $firebase(fb);
@@ -52,10 +45,6 @@ angular.module('myApp.feed', ['ngRoute'])
             comment: comment,
             commenter: commenter
         })
-
-        $('.writeComment').css({"opacity":"0","z-index":"-1"})
-
-        $('.posts').css({"opacity":"1"})
 
     }
 
@@ -67,49 +56,21 @@ angular.module('myApp.feed', ['ngRoute'])
         var sync = $firebase(fb)
         $scope.comments = sync.$asArray();
 
-        console.log($scope.comments);
-
-        $('.readComment').css({"opacity":"1","z-index":"999"})
-
-        $('.posts').css({"opacity":"0"})
-
     }
 
-
-    //close comment box
-    $scope.closeWriteComment = function(){
-        $('.writeComment').css({"opacity":"0","z-index":"-1"})
-
-        $('.posts').css({"opacity":"1"})
-    }
-
-    //close reading comments
-    $scope.closeReadComment = function(){
-       $('.readComment').css({"opacity":"0","z-index":"-1"})
-
-       $('.posts').css({"opacity":"1"})
-    }
 
 
 
     ////////////////////////////////////////////
-
+    $scope.post = "";
     //opens up dialog and displays text for link user clicked on
     $scope.read = function(id) {
     var firebaseObj = new Firebase("https://writesource.firebaseio.com/Articles/" + id);
-
-
     var sync = $firebase(firebaseObj)
-    $scope.post = sync.$asObject();
-    console.log($scope.post);
+    $scope.post = sync.$asObject();  
 
-    $(".readPost").css({"opacity": "100", "z-index":"9999"})
-    }
+    };
 
-    //closes dialog
-    $scope.closeMe = function(){
-        $(".readPost").css({"opacity": "0", "z-index":"-9999"})
-    }
 
     //like functionality - adds +1 each time button clicked
     
@@ -119,7 +80,6 @@ angular.module('myApp.feed', ['ngRoute'])
         
         //prevents from liking more than once
         $('.likeButton').click(function(){
-        console.log("clicked")
         $(this).css({"opacity":"0", "display":"none"})
         })
         
@@ -127,13 +87,9 @@ angular.module('myApp.feed', ['ngRoute'])
         var likes = syn.$asArray();
         likes.$loaded(function(likes){
 
-        console.log(likes)
-
         var thisLikes = likes[0].$value
-        console.log(likes[0].$value)
         var firebaseObj = new Firebase("https://writesource.firebaseio.com/Articles/" + id);
         var article = $firebase(firebaseObj);
-
 
 
         article.$update({
@@ -143,7 +99,6 @@ angular.module('myApp.feed', ['ngRoute'])
         }, function(error) {
             console.log("Error:", error);
         });
-
 
         })
         console.log(syn)

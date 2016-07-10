@@ -45,17 +45,17 @@
       
       <div class="row" style="text-align: center">
         <div class="col-md-6">
-        <h2><a href="" ng-click="read(article.$id)">{{article.title}}</a></h2>
+        <a href="" data-toggle="modal" style="font-size: 35px;" data-target="#readModal" ng-click="read(article.$id)">{{article.title}}</a>
         <p>{{article.summary}}</p>
           
         </div>
         <div class="col-md-6">
           <button class="btn btn-success likeButton" ng-disabled="isDisabled[key]" class="likes" ng-click="plusOne(article.$id)">+</button>
           <!-- Leave comment function -->
-          <button class="btn btn-primary" id="commentButton" ng-click="openComment(article.$id)">Leave a Comment</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#leaveCommentModal" ng-click="openComment(article.$id)">Leave a Comment</button>
 
           <!-- Read Comments function -->
-          <button class="btn btn-primary"ng-click="readComment(article.$id)">Comments</button>
+          <button class="btn btn-primary" class="btn btn-primary" data-toggle="modal" data-target="#readCommentModal" ng-click="readComment(article.$id)">Comments</button>
           <br></br>
           <h3>Likes: {{ article.likes }}</h3>
 
@@ -68,42 +68,63 @@
                
   </div>
 
-  <!-- Modal for stories -->
-  <div style="height: auto; opacity: 0;" class="container readPost">
-    <button ng-click="closeMe()" class="close" style="color: blue; font-family: sans-serif">x</button>
-    <textarea style="height: 500px; width: 100%; ">
-      {{post.post}}
-    </textarea>
+     
+<div id="readModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div id="myModal" class="modal-content">
+      <div class="modal-header">
+      <h3>{{post.title}} </h3>
+        <p>{{post.post}}</p>
+      <div class="modal-footer">
+        <button class="btn btn-xs btn-primary" type="button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-
-  <!-- Modal for writing comments -->
-  <div style="height: auto; opacity: 0; position: fixed; z-index: -1; margin-top: -10%; border: 1px solid lightgray; background-color: whitesmoke; padding: 15px" class="container writeComment">
-    <button ng-click="closeWriteComment()" class="close" style="color: blue; font-family: sans-serif">x</button>
-    <input  style="margin-bottom: 1%; border: 1px solid gray;"placeholder="Your Name"ng-model="postToComment.commenter" />
-    <textarea ng-model="postToComment.comment"style="height: 100px; width: 100%; ">
-    </textarea>
-    <button class="btn btn-success" ng-disabled="!postToComment.comment|| !postToComment.commenter" ng-click="writeComment()">Comment</button>
   </div>
+</div>
 
-  <!--Modal for reading comments  -->
-  <div style="height: auto; opacity: 0;  position: fixed; z-index: -1; margin-top: -10%; background-color: white; border: 1px solid lightgray; padding: 15px" class="container readComment">
-  
-    <button ng-click="closeReadComment()" class="close" style=" font-family: sans-serif; margin-right: 2%;">x</button>
-    <div style="width: 100%; border: 1px solid lightgray ">
 
-      <li style="list-style: none" ng-show="!comments.length">No Comments Yet...</li>
-      <div ng-repeat="comment in comments">
+ <!--Leave Comment Modal content-->
 
-        <li style="list-style: none"> - {{comment.commenter}}</li>
+ <div id="leaveCommentModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div id="myModal" class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <input  style="margin-bottom: 1%; border: 1px solid gray;"placeholder="Your Name"ng-model="postToComment.commenter" />
+        <textarea ng-model="postToComment.comment"style="height: 100px; width: 100%; ">
+        </textarea>
+        <button class="btn btn-success" ng-disabled="!postToComment.comment|| !postToComment.commenter" ng-click="writeComment()">Comment</button>
+      <div class="modal-footer">
+        <button class="btn btn-xs btn-primary" type="button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!--Read Comment Modal content-->
+
+ <div id="readCommentModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div id="myModal" class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <li style="list-style: none" ng-show="!comments.length">No Comments Yet...</li>
+        <div ng-repeat="comment in comments">
+
+        <li style="list-style: none"> <b>{{comment.commenter}} Says:</b></li>
         <li style="list-style: none" >{{comment.comment}}</li>
         <hr> 
       </div>
-      
-
+        <button class="btn btn-xs btn-primary" type="button" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
-
-     
+  </div>
+</div>
 
     <footer class="footer">
       <div class="container">
