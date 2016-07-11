@@ -34,8 +34,6 @@ angular.module('myApp.feed', ['ngRoute'])
     //push comments to firebase
     $scope.writeComment = function(){
         var fb = new Firebase("https://writesource.firebaseio.com/Comments/" + $scope.postToComment.$id);
-        console.log(fb)
-
         var comment = $scope.postToComment.comment;
 
         var commenter = $scope.postToComment.commenter;
@@ -51,8 +49,7 @@ angular.module('myApp.feed', ['ngRoute'])
     //read comments by syncing comments as array
     $scope.readComment = function(id){
         var fb = new Firebase("https://writesource.firebaseio.com/Comments/" + id);
-        console.log(fb)
-
+        
         var sync = $firebase(fb)
         $scope.comments = sync.$asArray();
 
