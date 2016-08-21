@@ -17,12 +17,13 @@ angular.module('myApp.addPost', ['ngRoute'])
     var login={};
 	$scope.login=login;
 
+	
+
 	$scope.logout = function(){
     CommonProp.logoutUser();
 	}
     
     
-
     $scope.AddPost = function(){
 	login.loading = true;
 
@@ -34,12 +35,21 @@ angular.module('myApp.addPost', ['ngRoute'])
 	var firebaseObj = new Firebase("https://writesource.firebaseio.com/Articles/");
 	
    	var fb = $firebase(firebaseObj);
+
+
+	var authData = firebaseObj.getAuth();
+
+	//get current user from login
+	if (authData) {
+	  console.log("Authenticated user with uid:", authData.uid);
+	  var voter = authData.uid;
+	}
         
 	var user = CommonProp.getUser();
 	console.log("published")
 
 
-	fb.$push({title: title, post: post,'.priority': user, likes: 0, summary: summary, saved: "false"}).then(function(ref) {
+	fb.$push({title: title, post: post,'.priority': user, likes: 0, summary: summary, saved: "false", voters: [voter]}).then(function(ref) {
 		login.loading = false;
 		$location.path('/feed');
 	}, function(error) {

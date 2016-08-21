@@ -68,17 +68,49 @@ angular.module('myApp.feed', ['ngRoute'])
 
     };
 
+    //initialize variable
+    //if user has voted match will be set to true
+    var match = false;
+    var voterArray = []
 
     //like functionality - adds +1 each time button clicked
     
+    //get current user from login
+    var authData = firebaseObj.getAuth();
+    if (authData) {
+      console.log("Authenticated user with uid:", authData.uid);
+      var currentUser = authData.uid;
+    }
 
     $scope.plusOne = function(id) {
         var fb = new Firebase("https://writesource.firebaseio.com/Articles/" + id);
-        
-        //prevents from liking more than once
-        $('.likeButton').click(function(){
-        $(this).css({"opacity":"0", "display":"none"})
+        voterArray = [];
+        // //prevents from liking more than once
+        // $('.likeButton').click(function(){
+        // $(this).css({"opacity":"0", "display":"none"})
+        // })
+
+        //location for voters associated with question
+        var voters = new Firebase("https://writesource.firebaseio.com/Articles/"+id+"/voters");
+
+        //get value from voters fb and store in
+        //temporary array
+        voters.once('value', function(snap){
+            snap.forEach(function(childSnap){
+                var key = childSnap.key();
+                var childData = childSnap.val()
+                voterArray.push(childData)
+            })
         })
+        
+
+        //iterate through temporary array 
+        //if a match then bool match is true
+        if(voterArray.indexOf(currentUser) > -1){
+            match = true;
+        }
+
+        if(match == false){
         
         var syn = $firebase(fb);
         var likes = syn.$asArray();
@@ -98,10 +130,10 @@ angular.module('myApp.feed', ['ngRoute'])
         });
 
         })
-        console.log(syn)
-
-        console.log(id);
-
+        
+        }else{
+            console.log("you voted already!")
+        }
         
     }
 

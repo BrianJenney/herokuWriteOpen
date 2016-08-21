@@ -18,6 +18,15 @@
       width: 25%;
       }
 
+      .glyphicon-heart-empty:before {
+    content: "\e143";
+    color: red;
+      }
+
+      .glyphicon-heart-empty:hover{
+        cursor: pointer;
+      }
+
 
     </style>
     
@@ -28,10 +37,10 @@
    <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
-          <a class="blog-nav-item" href="#/welcome">Home</a>
-          <a class="blog-nav-item " href="#/addPost">Write</a>
-          <a class="blog-nav-item active" href="#/feed">Read</a>
-          <a class="blog-nav-item " style="cursor:pointer;" ng-click="logout();">Logout</a>
+          <a class="blog-nav-item" href="#/welcome"><span class="glyphicon glyphicon-home"></span></a>
+          <a class="blog-nav-item " href="#/addPost"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a class="blog-nav-item active" href="#/feed"><span class="glyphicon glyphicon-book"></span></a>
+          <a class="blog-nav-item " style="cursor:pointer;" ng-click="logout();"><span class="glyphicon glyphicon-dashboard"></span></a>
         </nav>
       </div>
     </div>
@@ -44,13 +53,15 @@
       
       
       <div class="row" style="text-align: center">
-        <div class="col-md-6">
+        <div class="col-md-4">
         <a href="" data-toggle="modal" style="font-size: 35px;" data-target="#readModal" ng-click="read(article.$id)">{{article.title}}</a>
         <p>{{article.summary}}</p>
           
         </div>
-        <div class="col-md-6">
-          <button class="btn btn-success likeButton" ng-disabled="isDisabled[key]" class="likes" ng-click="plusOne(article.$id)">+</button>
+        <div class="col-md-4">
+          <span class="glyphicon glyphicon-heart-empty likeButton" style="font-size:3em" ng-disabled="isDisabled[key]" class="likes" ng-click="plusOne(article.$id)"></span>
+        </div>
+        <div class="col-md-4">
           <!-- Leave comment function -->
           <button class="btn btn-primary" data-toggle="modal" data-target="#leaveCommentModal" ng-click="openComment(article.$id)">Leave a Comment</button>
 
